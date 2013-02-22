@@ -107,16 +107,16 @@ end
 # Create a php.d file to set the timezone
 
 # Create DB and zap schema
-if `mysql -e 'show databases' | grep rs_selfservice`.empty?
-  execute "Create Database Schema" do
-    command "mysql -e 'create database rs_selfservice'"
-  end
-
-  execute "Zap Schema" do
-    cwd ::File.join(node.rsss.install_dir, 'application', 'scripts')
-    command './zap_schema.sh'
-  end
-end
+#if `mysql -e 'show databases' | grep rs_selfservice`.empty?
+#  execute "Create Database Schema" do
+#    command "mysql -e 'create database rs_selfservice'"
+#  end
+#
+#  execute "Zap Schema" do
+#    cwd ::File.join(node.rsss.install_dir, 'application', 'scripts')
+#    command './zap_schema.sh'
+#  end
+#end
 
 # Hack up the vhost for AllowOverride and using /public
 # Create or re-create virtualhost (apache) or config for nginx
@@ -124,12 +124,12 @@ end
 # Set AllowOverride All
 # SetEnv APPLICATION_ENV "production|development"
 
-bash "Hack up the vhost" do
-  code <<-EOF
-sed -i 's/AllowOverride None/AllowOverride All/g' /etc/httpd/sites-available/rsss.conf
-sed -i 's,/home/webapps/rsss\\(>\\?\\)$,/home/webapps/rsss/public\\1,g' /etc/httpd/sites-available/rsss.conf
-/etc/init.d/httpd restart
-  EOF
-end
+#bash "Hack up the vhost" do
+#  code <<-EOF
+#sed -i 's/AllowOverride None/AllowOverride All/g' /etc/httpd/sites-available/rsss.conf
+#sed -i 's,/home/webapps/rsss\\(>\\?\\)$,/home/webapps/rsss/public\\1,g' /etc/httpd/sites-available/rsss.conf
+#/etc/init.d/httpd restart
+#  EOF
+#end
 
 rightscale_marker :end
